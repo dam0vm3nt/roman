@@ -69,6 +69,28 @@ function _toRoman(indian) {
     if (indian<1 || indian>3999) {
         throwInvalidRange();
     }
+
+    // We do the reverse thing here. Hammering down that indian number
+    // until it's 0.
+    // Values are orderer such that no normalization is to be done
+
+    var idx = 0;
+    var roman = "";
+
+    while (indian>0) {
+        if (idx >= NUMBERS.length) {
+            throw throwInvalidRange();
+        }
+
+        if (indian>=NUMBERS[idx]) {
+            indian-=NUMBERS[idx];
+            roman+=LETTERS[idx];
+        } else {
+            idx++;
+        }
+    }
+
+    return roman;
 }
 
 /**
