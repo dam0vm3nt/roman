@@ -26,6 +26,17 @@ function _toIndian(roman) {
 }
 
 /**
+ * This function will convert an indian number to roman notation;
+ * @param indian
+ * @private
+ */
+function _toRoman(indian) {
+    if (indian<1 || indian>3999) {
+        throwInvalidRange();
+    }
+}
+
+/**
  * The final roman number conversion utility
  * @param arg it accepts an integer or a string rappresenting a roman number between 1-3999 otherwise throws
  */
@@ -44,26 +55,19 @@ var roman = function(arg) {
         this.indian = _toIndian(arg);
         this.roman = arg;
     } else if (isInteger(arg)) {
-        if (arg<1 || arg>3999) {
-            throwInvalidRange();
-        }
         this.indian =arg;
+        this.roman = _toRoman(arg);
     } else {
         throwInvalidValue();
     }
-
-
-
-
-
 };
 
 roman.prototype.toInt = function() {
-
+    return this.indian;
 };
 
 roman.prototype.toString = function() {
-
+    return this.roman;
 };
 
 roman.prototype.constructor = roman;
