@@ -2,6 +2,10 @@
 
 const isInteger = require('is-integer');
 
+/**
+ * Some throws ...
+ */
+
 function throwValueRequired() {
     throw new Error('value required');
 }
@@ -15,19 +19,50 @@ function throwInvalidRange() {
 }
 
 /**
+ * Data for conversion.
+ */
+
+
+var LETTERS = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+var NUMBERS = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+
+
+/**
  * This function will conver a roman number to indian notation.
- * @param roman
+ * @param {string} roman
  * @private
  */
 function _toIndian(roman) {
     if (roman.length==0) {
         throwInvalidValue();
     }
+
+    // Prefixes are ordered such that it will recon the right one
+    // so we just eat that string until is finished and sum up everything
+    // Also we are checking that higher prefixes always come before lowest
+    // one otherwise that string is invalid.
+
+    var idx = 0;
+    var indian = 0;
+
+    while(roman.length>0) {
+        if (idx >= LETTERS.length) {
+            throwInvalidValue();
+        }
+        if (roman.startsWith(LETTERS[idx])) {
+            indian+=NUMBERS[idx];
+            roman = roman.substring(LETTERS[idx].length);
+        } else {
+            idx++;
+        }
+    }
+
+    return indian;
 }
 
 /**
  * This function will convert an indian number to roman notation;
- * @param indian
+ * @param {number} indian
  * @private
  */
 function _toRoman(indian) {
@@ -38,7 +73,8 @@ function _toRoman(indian) {
 
 /**
  * The final roman number conversion utility
- * @param arg it accepts an integer or a string rappresenting a roman number between 1-3999 otherwise throws
+ * @constructor
+ * @param {string|number} arg it accepts an integer or a string rappresenting a roman number between 1-3999 otherwise throws
  */
 var roman = function(arg) {
     // We decide to store the integer rappresentation
