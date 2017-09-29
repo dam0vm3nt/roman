@@ -57,6 +57,10 @@ function _toIndian(roman) {
         }
     }
 
+    if (indian>3999) {
+        throwInvalidRange();
+    }
+
     return indian;
 }
 
@@ -79,6 +83,7 @@ function _toRoman(indian) {
 
     while (indian>0) {
         if (idx >= NUMBERS.length) {
+            // Actually this should never happen
             throw throwInvalidRange();
         }
 
