@@ -1,4 +1,4 @@
-'strict'
+'use strict';
 
 const expect = require('chai').expect;
 
@@ -13,7 +13,7 @@ describe('roman', function () {
     });
 
     it('is a roman constructor', function () {
-        expect(new roman(0)).to.be.instanceOf(roman);
+        expect(new roman(1)).to.be.instanceOf(roman);
     });
 
     it('has an "toInt" method', function () {
